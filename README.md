@@ -23,6 +23,7 @@ RUNNING THE QUERIER
 	+ Create a specific database for the querier (e.g., 'dns_perf')
 	+ Create a specific username and password and grant access to the database
 	+ Update 'conf' file with the corresponding credentials and informations
+	+ The program will create the corresponding tables if necessary
 	
 (3) Specify domains names random prefix size in 'conf' file:
 	+ List domain names ' DOMAINS' field
@@ -35,3 +36,19 @@ RUNNING THE QUERIER
 	./dns_query <i>
 	
 <i> is an integer representing the number of minutes between consecutives queries
+
+
+MySQL INFRASTRUCTURE
+================================
+ + Table "domains": contains the domain names and their the up-to-date statistics
+ + Table "time_series": contains the actual time series for all domain names
+
+
+CONTENTS
+================================
+	conf -------------> The configuration
+	conf.{h,c}pp -----> A parser for "conf"
+	querier.{h,c}pp --> the DNS querier and the main() function
+	logger.{h,c}pp ---> an API for MySQL
+	Makefile ---------> standard makefile
+	README.md --------> this README file
