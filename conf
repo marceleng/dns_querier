@@ -1,0 +1,23 @@
+#List of domain names we want to query
+DOMAINS=[google.com,
+	facebook.com,
+	youtube.com,
+	yahoo.com,
+	live.com,
+	wikipedia.org,
+	baidu.com,
+	blogger.com,
+	msn.com,
+	qq.com ]
+
+#Defines the size of the random prefix added to the domain name
+RANDOM_PREFIX_SIZE=10
+
+###############
+# MySQL Block #
+###############
+MYSQL_USER=myusername
+MYSQL_PASSWD=mysecurepassword
+MYSQL_ADDRESS=localhost
+MYSQL_DB=dns
+MYSQL_PORT=3306
