@@ -19,7 +19,10 @@ typedef struct Measurement Measurement;
 class DNS_Querier {
 
 public:
-	DNS_Querier(int nb_domains, std::string domain_names[], uint32_t period);
+	DNS_Querier (uint32_t nb_domains, std::vector<std::string> domains,
+				 uint32_t period, uint32_t random_prefix_size, 
+				 DNS_Logger &logger);
+	~DNS_Querier();
 	std::string generate_random_dn (std::string dn);
 	void run();
 	void query_all();
@@ -28,8 +31,9 @@ private:
 	Measurement query_domain (ldns_resolver *res, std::string dn);
 
 	std::string *m_domains;
-	int m_nb_domains; 
+	uint32_t m_nbDomains; 
 	uint32_t m_period;
+	uint32_t m_prefSize;
 	DNS_Logger m_logger;
 };
 

@@ -1,28 +1,41 @@
 #ifndef CONF_HPP
 #define CONF_HPP
 
-#define RANDOM_PREFIX_SIZE 10
-#define NB_DOMAINS 10
+typedef unsigned int uint32_t; 	
 
-std::string DOMAINS[NB_DOMAINS] = {
-	".google.com",
-	".facebook.com",
-	".youtube.com",
-	".yahoo.com",
-	".live.com",
-	".wikipedia.org",
-	".baidu.com",
-	".blogger.com",
-	".msn.com",
-	".qq.com"
+/*
+ *	Class to parse a config file and hold the corresponding values
+ */
+class ConfParser {
+
+public:
+	void parse_file(std::string filename);
+	
+	// GETTERS
+	const std::vector<std::string>& get_domains() const;
+	const std::string& get_mysql_addr() const;
+	const std::string& get_mysql_db() const;
+	const std::string& get_mysql_pass() const;
+	uint32_t get_mysql_port() const;
+	const std::string& get_mysql_user() const;
+	uint32_t get_random_prefix_size() const;
+
+private:
+
+	void store_line(std::string key, std::string value);
+	std::string handle_array_line(std::string line);
+	
+	uint32_t m_randomPrefixSize;
+
+	//Domain names infos
+	std::vector <std::string> m_domains;
+
+	//MySQL infos
+	std::string m_mysqlUser;
+	std::string m_mysqlPass;
+	std::string m_mysqlDB;
+	std::string m_mysqlAddr;
+	uint32_t m_mysqlPort;
 };
-
-std::string MYSQL_USER = "dnsq";
-std::string MYSQL_PASSWD = "asdffh(rgjrgkljj#/djdjfd";
-std::string MYSQL_ADDRESS = "localhost";
-std::string MYSQL_DB = "dns";
-#ifndef MYSQL_PORT //Usually def in libmysql
-#define MYSQL_PORT = 3306;
-#endif
 
 #endif
