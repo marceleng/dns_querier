@@ -1,5 +1,5 @@
-#ifndef CONF_H
-#define CONF_H
+#ifndef CONF_HPP
+#define CONF_HPP
 
 #define RANDOM_PREFIX_SIZE 10
 #define NB_DOMAINS 10
@@ -21,5 +21,8 @@ std::string MYSQL_USER = "dnsq";
 std::string MYSQL_PASSWD = "asdffh(rgjrgkljj#/djdjfd";
 std::string MYSQL_ADDRESS = "localhost";
 std::string MYSQL_DB = "dns";
+#ifndef MYSQL_PORT //Usually def in libmysql
+#define MYSQL_PORT = 3306;
+#endif
 
 #endif

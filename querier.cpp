@@ -1,14 +1,17 @@
 #include <iostream>
-#include <ldns/ldns.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <assert.h>
 #include <stdlib.h>
+#include <unistd.h>
 
-#include "querier.h"
-#include "conf.h"
+#include "querier.hpp"
+#include "conf.hpp"
 
-DNS_Querier::DNS_Querier (int nb_domains, std::string domains[]) : m_nb_domains(nb_domains){
+#define MINUTE_IN_SEC 60
+
+
+DNS_Querier::DNS_Querier (int nb_domains, std::string domains[], uint32_t period) : m_nb_domains(nb_domains),m_period(period),m_logger(MYSQL_USER,MYSQL_PASSWD,MYSQL_DB,MYSQL_ADDRESS,MYSQL_PORT,RANDOM_PREFIX_SIZE+1) {
 	this->m_domains = new std::string[nb_domains];
 	for (int i=0; i<nb_domains; i++) {
 		this->m_domains[i] = domains[i];
@@ -38,7 +41,7 @@ Measurement DNS_Querier::query_domain (ldns_resolver *res, std::string dn) {
 	p = ldns_resolver_query(res, domain, LDNS_RR_TYPE_A,
 							LDNS_RR_CLASS_IN, LDNS_RD);
 							
-	Measurement result = { ldns_pkt_timestamp(p), ldns_pkt_querytime(p) };
+	Measurement result = { dn, ldns_pkt_timestamp(p), ldns_pkt_querytime(p) };
 	return result;
 }
 
@@ -61,7 +64,15 @@ void DNS_Querier::query_all() {
 	}
 }
 
+void DNS_Querier::run() {
+	while(1) {
+		this->query_all();
+		sleep(this->m_period*MINUTE_IN_SEC);
+	}
+}
+
 int main() {
-	DNS_Querier dq = DNS_Querier(NB_DOMAINS,DOMAINS);
-	dq.query_all();
+	uint32_t period=1;
+	DNS_Querier dq(NB_DOMAINS,DOMAINS,period);
+	dq.run();
  }
