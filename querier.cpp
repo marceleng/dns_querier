@@ -1,6 +1,7 @@
 #include <stdio.h> //printf()
 #include <stdlib.h> //rand()
 #include <cstdlib>
+#include <iostream>
 
 #include "querier.hpp"
 #include "conf.hpp"
@@ -10,20 +11,9 @@
 
 DNS_Querier::DNS_Querier (uint32_t nb_domains, std::vector<std::string> domains, uint32_t period,
 							uint32_t random_prefix_size, DNS_Logger &logger) : 
-							m_nbDomains(nb_domains),m_period(period),
-							m_prefSize(random_prefix_size), m_logger(logger)
-{
-	//TODO: add to preprocessing
-	this->m_domains = new std::string[nb_domains];
-	for (uint32_t i=0; i<nb_domains; i++) {
-		this->m_domains[i] = domains[i];
-	}
-}
-
-DNS_Querier::~DNS_Querier() 
-{
-	delete[] this->m_domains;	
-}
+							m_domains(domains), m_nbDomains(nb_domains),
+							m_period(period), m_prefSize(random_prefix_size),
+							m_logger(logger) {}
 
 std::string DNS_Querier::generate_random_dn (std::string dn) {
 	
@@ -47,8 +37,15 @@ Measurement DNS_Querier::query_domain (ldns_resolver *res, std::string dn) {
 	
 	p = ldns_resolver_query(res, domain, LDNS_RR_TYPE_A,
 							LDNS_RR_CLASS_IN, LDNS_RD);
+	
+	//Something went wrong with the query, probably no contact with ns servers					
+	if (!p) {
+		std::cerr << "ERROR while contacting the DNS servers, "
+					 "check your internet connection and try again"<<std::endl;
+		exit(EXIT_FAILURE);
+	}
 							
-	Measurement result = { dn, ldns_pkt_timestamp(p), ldns_pkt_querytime(p) };
+	Measurement result = { dn, ldns_pkt_timestamp(p), ldns_pkt_querytime(p) };						
 	return result;
 }
 

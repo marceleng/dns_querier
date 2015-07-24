@@ -1,4 +1,2 @@
-(1) Change domains structure in DNS_Querier to std::vector and remove destructor
-(2) Catch MySQL Exception and check what happens if DNS request timeouts
 (3) Comment everything in Doxygen Style
 (4) Add a --verbose mode that prints statistics at each iteration

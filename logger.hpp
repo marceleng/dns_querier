@@ -31,7 +31,13 @@ private:
 	uint32_t insert_domain (std::string domain, uint32_t ts, mysqlpp::Query query);
 	void insert_mes (uint32_t dn_id, uint32_t ts, uint32_t query_time, mysqlpp::Query query);
 	void update_stats(uint32_t dn_id, uint32_t ts, mysqlpp::Query query);
-
+	
+	/*
+	 * String verifiers
+	 */
+	bool is_alphanum (char c);
+	bool is_valid_name (std::string db_name);
+	
 };
 
 #endif

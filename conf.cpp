@@ -18,20 +18,24 @@ void ConfParser::parse_file(std::string filename)
 	
 	while( std::getline(infile, line) ) {
 		if (line.size() != 0) {
-			//Remove comments
+			//Remove comments if necessary
 			int eol = line.find("#");
-			if (eol !=std::string::npos)	 
-				line = line.substr(eol,line.size());
+			if (eol != -1) {
+				line = line.substr(eol,line.size()-eol);
+			}
 		
 			std::istringstream is_line(line);
+			
+			//Handle the DOMAINS array
 			if (in_domains) {
 				this->m_domains.push_back(this->handle_array_line(line));
 				if (line.find("]") != std::string::npos) {
 					in_domains = false;
 				}
 			}
+			//Else look for the KEY=value structure
 			else if( std::getline(is_line, key, '=') ) {
-				if( std::getline(is_line, value) ) 
+				if( std::getline(is_line, value) ) {
 					if (key.compare("DOMAINS")==0) {
 						in_domains = true;
 						this->m_domains.push_back(this->handle_array_line(value));
@@ -39,13 +43,15 @@ void ConfParser::parse_file(std::string filename)
 					else {
 						store_line(key, value);
 					}
+				}
 			}
 			else {
 				std::string error = "Non-valid line in conf file: "+line;
 				throw std::invalid_argument(error.c_str());	
 			}
 		}
-	}	
+	}
+	std::cout<<"Configuration file parsed"<<std::endl;
 }
 
 std::string ConfParser::handle_array_line(std::string line) {
