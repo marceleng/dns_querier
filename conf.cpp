@@ -53,7 +53,8 @@ void ConfParser::parse_file(std::string filename)
 	}
 }
 
-std::string ConfParser::handle_array_line(std::string line) {
+std::string ConfParser::handle_array_line(std::string line)
+{
 	int offset = line.find_first_not_of(" \t\f\v\n\r[");
 	std::string result = line.substr(offset,line.size()-offset);
 	result = result.substr(0,result.find_last_of(",]"));
@@ -94,30 +95,37 @@ void ConfParser::store_line(std::string key, std::string value)
 /*
  * GETTERS BLOCK
  */
-const std::vector<std::string>& ConfParser::get_domains() const {
+const std::vector<std::string>& ConfParser::get_domains() const
+{
 	return m_domains;
 }
 
-const std::string& ConfParser::get_mysql_addr() const {
+const std::string& ConfParser::get_mysql_addr() const
+{
 	return m_mysqlAddr;
 }
 
-const std::string& ConfParser::get_mysql_db() const {
+const std::string& ConfParser::get_mysql_db() const 
+{
 	return m_mysqlDB;
 }
 
-const std::string& ConfParser::get_mysql_pass() const {
+const std::string& ConfParser::get_mysql_pass() const 
+{
 	return m_mysqlPass;
 }
 
-uint32_t ConfParser::get_mysql_port() const {
+uint32_t ConfParser::get_mysql_port() const 
+{
 	return m_mysqlPort;
 }
 
-const std::string& ConfParser::get_mysql_user() const {
+const std::string& ConfParser::get_mysql_user() const 
+{
 	return m_mysqlUser;
 }
 
-uint32_t ConfParser::get_random_prefix_size() const {
+uint32_t ConfParser::get_random_prefix_size() const 
+{
 	return m_randomPrefixSize;
 }

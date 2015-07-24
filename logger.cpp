@@ -59,7 +59,8 @@ DNS_Logger::DNS_Logger(std::string username, std::string password, std::string d
 	exit(EXIT_FAILURE);
 }
 										  
-void DNS_Logger::log_queries(Measurement measurements[], int nb_measurements) {
+void DNS_Logger::log_queries(Measurement measurements[], int nb_measurements) 
+{
 	mysqlpp::Connection conn(m_dbName.c_str(), m_dbAddress.c_str(), m_username.c_str(),
 							 m_password.c_str(), m_port);
 	mysqlpp::Query query = conn.query();
@@ -99,7 +100,8 @@ void DNS_Logger::log_queries(Measurement measurements[], int nb_measurements) {
 	}
 }
 
-uint32_t DNS_Logger::get_domain_id (std::string domain, mysqlpp::Query query) {
+uint32_t DNS_Logger::get_domain_id (std::string domain, mysqlpp::Query query) 
+{
 	query.reset();
 	query << "select id from domains where name like %0q";
 	query.parse();
@@ -111,7 +113,8 @@ uint32_t DNS_Logger::get_domain_id (std::string domain, mysqlpp::Query query) {
 		return 0;
 }
 
-uint32_t DNS_Logger::insert_domain (std::string domain, uint32_t ts, mysqlpp::Query query) {
+uint32_t DNS_Logger::insert_domain (std::string domain, uint32_t ts, mysqlpp::Query query) 
+{
 	query.reset();
 	query << "insert into domains (name,first_ts) values (%0q,FROM_UNIXTIME(%1))";
 	query.parse();
@@ -119,7 +122,8 @@ uint32_t DNS_Logger::insert_domain (std::string domain, uint32_t ts, mysqlpp::Qu
 	return query.insert_id();
 }
 											
-void DNS_Logger::insert_mes (uint32_t dn_id, uint32_t ts, uint32_t query_time, mysqlpp::Query query) {
+void DNS_Logger::insert_mes (uint32_t dn_id, uint32_t ts, uint32_t query_time, mysqlpp::Query query)
+{
 	query.reset();
 	query << "insert into time_series (domain_id,timestamp,query_time) "
 			 "values (%0,FROM_UNIXTIME(%1),%2)";
@@ -128,7 +132,8 @@ void DNS_Logger::insert_mes (uint32_t dn_id, uint32_t ts, uint32_t query_time, m
 }
 
 void DNS_Logger::update_stats(uint32_t dn_id, std::string domain_name, 
-							  uint32_t ts, mysqlpp::Query query) {
+							  uint32_t ts, mysqlpp::Query query) 
+{
 	query.reset();
 	query << "select count(*),avg(query_time),std(query_time) from time_series where domain_id=%0";
 	query.parse();
@@ -149,7 +154,8 @@ void DNS_Logger::update_stats(uint32_t dn_id, std::string domain_name,
 	}
 }
 
-bool DNS_Logger::is_valid_name (std::string db_name) {
+bool DNS_Logger::is_valid_name (std::string db_name)
+{
 	for (uint32_t i=0; i<db_name.size(); i++) {
 		char curr = db_name[i];
 		if ( !( this->is_alphanum(curr) || curr=='_' || curr=='$' ))
@@ -158,7 +164,8 @@ bool DNS_Logger::is_valid_name (std::string db_name) {
 	return true;
 }
 
-bool DNS_Logger::is_alphanum (char c) {
+bool DNS_Logger::is_alphanum (char c) 
+{
 	return ( (('0' <= c) && (c <= '9')) || (('a' <= c) && (c <= 'z')) || 
 				(('A' <= c) && (c <= 'Z')) );
 }

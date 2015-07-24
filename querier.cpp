@@ -15,7 +15,8 @@ DNS_Querier::DNS_Querier (uint32_t nb_domains, std::vector<std::string> domains,
 							m_period(period), m_prefSize(random_prefix_size),
 							m_logger(logger) {}
 
-std::string DNS_Querier::generate_random_dn (std::string dn) {
+std::string DNS_Querier::generate_random_dn (std::string dn)
+{
 	
 	std::string output = std::string(this->m_prefSize,'a');
 	
@@ -29,7 +30,8 @@ std::string DNS_Querier::generate_random_dn (std::string dn) {
 }
 
 //Returns query time
-Measurement DNS_Querier::query_domain (ldns_resolver *res, std::string dn) {
+Measurement DNS_Querier::query_domain (ldns_resolver *res, std::string dn) 
+{
 	ldns_rdf *domain;
 	ldns_pkt *p;
 	
@@ -49,7 +51,8 @@ Measurement DNS_Querier::query_domain (ldns_resolver *res, std::string dn) {
 	return result;
 }
 
-void DNS_Querier::query_all() {
+void DNS_Querier::query_all() 
+{
 	
 	Measurement results[this->m_nbDomains];
 	ldns_resolver *res;
@@ -64,7 +67,8 @@ void DNS_Querier::query_all() {
 	(this->m_logger).log_queries(results,this->m_nbDomains);
 }
 
-void DNS_Querier::run() {
+void DNS_Querier::run() 
+{
 	//Used to compensate for the DNS and MySQL overhead
 	timeval *start_time = (timeval*) malloc(sizeof(timeval));
 	timeval *end_time = (timeval*) malloc(sizeof(timeval));
@@ -83,7 +87,8 @@ void DNS_Querier::run() {
 	free(end_time);
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[]) 
+{
 
 	uint32_t period;
 	bool verbose=false;

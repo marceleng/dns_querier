@@ -1,12 +1,11 @@
 #ifndef QUERIER_HPP
 #define QUERIER_HPP
+
 #include <string>
 #include <sys/time.h>
 #include <ldns/ldns.h>
 
 #include "logger.hpp"
-
-typedef unsigned int uint32_t;
 
 //Holds the result of a query
 struct Measurement {

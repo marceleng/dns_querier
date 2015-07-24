@@ -16,8 +16,8 @@ RANDOM_PREFIX_SIZE=10
 ###############
 # MySQL Block #
 ###############
-MYSQL_USER=myusername
-MYSQL_PASSWD=mysecurepassword
+MYSQL_USER=dns_sql
+MYSQL_PASSWORD=afancypassword
 MYSQL_ADDRESS=localhost
-MYSQL_DB=dns
+MYSQL_DB=dns_queries
 MYSQL_PORT=3306
