@@ -46,9 +46,11 @@ MySQL INFRASTRUCTURE
 
 CONTENTS
 ================================
+```
 conf -------------> The configuration
 conf.{h,c}pp -----> A parser for "conf"
 querier.{h,c}pp --> the DNS querier and the main() function
 logger.{h,c}pp ---> an API for MySQL
 Makefile ---------> standard makefile
 README.md --------> this README file
+```
