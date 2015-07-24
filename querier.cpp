@@ -86,21 +86,30 @@ void DNS_Querier::run() {
 int main(int argc, char* argv[]) {
 
 	uint32_t period;
+	bool verbose=false;
 
-	if ((argc < 2) || !(period=atoi(argv[1]))) {
-		printf("Usage: ./dns_querier <i>\n\ti is the querying period in minutes\n");
-		return -1;
-	}
+	if (argc >1 && (period=atoi(argv[argc-1])) )  {
+		if ( (argc==2) || (argc==3 && 
+							(verbose=(strcmp(argv[1],"--verbose")==0))) ) {
+			goto run;	
+		}
+	} 
 
-	setbuf(stdout, NULL);
-	
+	printf("Usage: ./dns_querier [--verbose] <i>\n"
+				"\ti is the querying period in minutes\n"
+				"\tuse --verbose to print statistics after each round of query\n");
+	exit(EXIT_FAILURE);
+
+run:
 	ConfParser cp;
 	cp.parse_file("conf");
 	DNS_Logger logger(cp.get_mysql_user(),cp.get_mysql_pass(),cp.get_mysql_db(),
 						cp.get_mysql_addr(),cp.get_mysql_port(),
-						cp.get_random_prefix_size()+1);
+						cp.get_random_prefix_size()+1,verbose);
 	
 	DNS_Querier dq((cp.get_domains()).size(), cp.get_domains(), period,
 					cp.get_random_prefix_size(), logger);
 	dq.run();
+	
+
  }

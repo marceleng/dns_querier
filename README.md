@@ -1,6 +1,5 @@
 DNS QUERIER
 ================================
-
 A simple DNS querier that periodically sends dns queries to specified
 domains and register the querying times in a MySQL database
 
@@ -20,10 +19,9 @@ RUNNING THE QUERIER
 	make
 	
 (2) Prepare the MySQL setup:
- + Create a specific database for the querier (e.g., 'dns_perf')
  + Create a specific username and password and grant access to the database
  + Update 'conf' file with the corresponding credentials and informations
- + The program will create the corresponding tables if necessary
+ + The program will create the corresponding MySQL schema if necessary
 	
 (3) Specify domains names random prefix size in 'conf' file:
  + List domain names ' DOMAINS' field
@@ -33,9 +31,10 @@ RUNNING THE QUERIER
 
 (4) Run program:
 
-	./dns_query <i>
+	./dns_query [--verbose] <i>
 	
-`i` is an integer representing the number of minutes between consecutives queries
+ + `i` is an integer representing the number of minutes between consecutives queries
+ + `--verbose` prints the domain name statistics after each iteration
 
 
 MySQL INFRASTRUCTURE

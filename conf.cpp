@@ -1,8 +1,8 @@
 #include <sstream>
 #include <fstream>
-#include <stdexcept>
 #include <iostream>
 #include <vector>
+#include <cstdlib>
 
 #include "conf.hpp"
 
@@ -33,7 +33,7 @@ void ConfParser::parse_file(std::string filename)
 					in_domains = false;
 				}
 			}
-			//Else look for the KEY=value structure
+			//Else look for the key=value structure
 			else if( std::getline(is_line, key, '=') ) {
 				if( std::getline(is_line, value) ) {
 					if (key.compare("DOMAINS")==0) {
@@ -46,12 +46,11 @@ void ConfParser::parse_file(std::string filename)
 				}
 			}
 			else {
-				std::string error = "Non-valid line in conf file: "+line;
-				throw std::invalid_argument(error.c_str());	
+				std::cerr << "Non-valid line in conf file: "<<line<<std::endl;
+				exit(EXIT_FAILURE);
 			}
 		}
 	}
-	std::cout<<"Configuration file parsed"<<std::endl;
 }
 
 std::string ConfParser::handle_array_line(std::string line) {
@@ -86,8 +85,8 @@ void ConfParser::store_line(std::string key, std::string value)
 		
 	}
 	else {
-		std::string error = "Unknown field in conf file: "+key;
-		throw std::invalid_argument(error.c_str());			
+		std::cerr << "Unknown field in conf file: " << key << std::endl;
+		exit(EXIT_FAILURE);
 	}
 }
 

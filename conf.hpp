@@ -9,6 +9,7 @@ typedef unsigned int uint32_t;
 class ConfParser {
 
 public:
+	//Main function, read and parse the conf file filename
 	void parse_file(std::string filename);
 	
 	// GETTERS
@@ -21,8 +22,9 @@ public:
 	uint32_t get_random_prefix_size() const;
 
 private:
-
+	// Stores a one_line configuration line in the right holder
 	void store_line(std::string key, std::string value);
+	// Handle a line from an array in the conf file.
 	std::string handle_array_line(std::string line);
 	
 	uint32_t m_randomPrefixSize;
