@@ -78,6 +78,9 @@ void DNS_Querier::run() {
 		//We substract the time spent in query_all() to make it really periodic
 		sleep(this->m_period*MINUTE_IN_SEC - end_time->tv_sec + start_time->tv_sec);
 	}
+	
+	free(start_time);
+	free(end_time);
 }
 
 int main(int argc, char* argv[]) {
