@@ -1,7 +1,7 @@
 DNS QUERIER
 ================================
 
-	A simple DNS querier that periodically sends dns queries to specified
+A simple DNS querier that periodically sends dns queries to specified
 domains and register the querying times in a MySQL database
 
 
@@ -20,14 +20,14 @@ RUNNING THE QUERIER
 	make
 	
 (2) Prepare the MySQL setup:
-	+ Create a specific database for the querier (e.g., 'dns_perf')
-	+ Create a specific username and password and grant access to the database
-	+ Update 'conf' file with the corresponding credentials and informations
-	+ The program will create the corresponding tables if necessary
+ + Create a specific database for the querier (e.g., 'dns_perf')
+ + Create a specific username and password and grant access to the database
+ + Update 'conf' file with the corresponding credentials and informations
+ + The program will create the corresponding tables if necessary
 	
 (3) Specify domains names random prefix size in 'conf' file:
-	+ List domain names ' DOMAINS' field
-	+ Specify the size for the random prefix (ie if RANDOM_PREFIX_SIZE=3,
+ + List domain names ' DOMAINS' field
+ + Specify the size for the random prefix (ie if RANDOM_PREFIX_SIZE=3,
 	  the program will send query for xyz.domain.ext where x,y and z are 
 	  randomly generated)
 
@@ -35,7 +35,7 @@ RUNNING THE QUERIER
 
 	./dns_query <i>
 	
-<i> is an integer representing the number of minutes between consecutives queries
+`i` is an integer representing the number of minutes between consecutives queries
 
 
 MySQL INFRASTRUCTURE
@@ -46,9 +46,9 @@ MySQL INFRASTRUCTURE
 
 CONTENTS
 ================================
-	conf -------------> The configuration
-	conf.{h,c}pp -----> A parser for "conf"
-	querier.{h,c}pp --> the DNS querier and the main() function
-	logger.{h,c}pp ---> an API for MySQL
-	Makefile ---------> standard makefile
-	README.md --------> this README file
+conf -------------> The configuration
+conf.{h,c}pp -----> A parser for "conf"
+querier.{h,c}pp --> the DNS querier and the main() function
+logger.{h,c}pp ---> an API for MySQL
+Makefile ---------> standard makefile
+README.md --------> this README file
