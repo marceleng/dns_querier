@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -Wall -c
+CFLAGS = -Wall -c -I/usr/include/mysql
 LFLAGS = -Wall
 LIBS = -lldns -lmysqlpp
 

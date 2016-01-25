@@ -50,10 +50,10 @@ DNS_Logger::DNS_Logger(std::string username, std::string password, std::string d
 			"query_time INT NOT NULL )";
 		query.execute();
 		return;
-	} catch (mysqlpp::ConnectionFailed e) {
+	} catch (mysqlpp::ConnectionFailed& e) {
 		std::cerr << "Could not connect to the MySQL server, "
 					 "please check your configuration" << std::endl;
-	} catch (mysqlpp::Exception e) {
+	} catch (mysqlpp::Exception& e) {
 		std::cerr << "MySQL exception: " << e.what() <<std::endl;
 	}
 	exit(EXIT_FAILURE);
@@ -94,7 +94,7 @@ void DNS_Logger::log_queries(Measurement measurements[], int nb_measurements)
 			this->update_stats(dn_id,orig_dn,ts,query);
 			
 		}
-	} catch (mysqlpp::Exception e) {
+	} catch (mysqlpp::Exception& e) {
 		std::cerr << "MySQL exception: " << e.what() <<std::endl;
 		exit(EXIT_FAILURE);
 	}
